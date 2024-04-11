@@ -172,6 +172,7 @@ function demonwalker:init(options)
     end
   end
   demonwalker.remainingRooms = {}
+  demonwalker.successRooms = {}
   demonwalker.failedRooms = {}
   for _,roomID in ipairs(rooms) do
     local roomNum = tonumber(roomID)
@@ -336,6 +337,7 @@ function demonwalker:arrived()
   if tonumber(mmp.currentroom) == tonumber(demonwalker.nextRoom) then
     demonwalker.currentRoom = mmp.currentroom
     demonwalker.remainingRooms[mmp.currentroom] = nil
+    demonwalker.successRooms[mmp.currentroom] = true
     if table.is_empty(demonwalker.searchTargets) then
       raiseEvent("demonwalker.arrived")
       return
@@ -362,6 +364,10 @@ end
 
 function demonwalker:getFailedRooms()
   return table.keys(demonwalker.failedRooms)
+end
+
+function demonwalker:getSuccessRooms()
+  return table.keys(demonwalker.successRooms)
 end
 
 function demonwalker:removeEventHandlers()
